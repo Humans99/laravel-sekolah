@@ -9,7 +9,7 @@ class Admin extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = ['user_id', 'username', 'password'];
+    protected $fillable = ['user_id', 'username'];
 
     protected $hidden = [
         'password',
