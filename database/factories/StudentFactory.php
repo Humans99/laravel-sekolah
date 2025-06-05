@@ -1,0 +1,25 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\ClassModel;
+use App\Models\Grade;
+use App\Models\ParentModel;
+use App\Models\Student;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class StudentFactory extends Factory
+{
+    protected $model = Student::class;
+    public function definition(): array
+    {
+        return [
+            'user_id' => User::factory()->create(['role' => 'student'])->id(),
+            'parent_id' => ParentModel::factory(),
+            'grade_id' => Grade::factory(),
+            'class_id' => ClassModel::factory(),
+            'username' => $this->faker->unique()->userName()
+        ];
+    }
+}
