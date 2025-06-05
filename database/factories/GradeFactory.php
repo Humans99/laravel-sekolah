@@ -11,7 +11,7 @@ class GradeFactory extends Factory
     public function definition(): array
     {
         return [
-            'level' => $this->faker->randomElement(['7', '8', '9'])
+            'level' => $this->faker->randomElement([7, 8, 9])
         ];
     }
 }
