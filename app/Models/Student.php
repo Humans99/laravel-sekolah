@@ -25,4 +25,29 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function parent()
+    {
+        return $this->belongsTo(ParentModel::class);
+    }
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(ClassModel::class);
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
 }
