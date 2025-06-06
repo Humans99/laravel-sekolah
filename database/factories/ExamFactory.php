@@ -11,11 +11,12 @@ class ExamFactory extends Factory
     protected $model = Exam::class;
     public function definition(): array
     {
+        $start = $this->faker->dateTime;
         return [
             'lesson_id' => Lesson::factory(),
             'title' => $this->faker->sentence(),
-            'start' => $this->faker->date('now'),
-            'end' => $this->faker->dateTimeBetween('now', '+1 month')
+            'start' => $start,
+            'end' => $this->faker->dateTimeBetween($start, '+1 week')
         ];
     }
 }
