@@ -13,7 +13,7 @@ class LessonFactory extends Factory
     protected $model = Lesson::class;
     public function definition(): array
     {
-        $start = $this->faker->dateTime;
+        $start = $this->faker->dateTime('now');
         return [
             'name' => $this->faker->unique()->sentence(3),
             'start' => $start,
