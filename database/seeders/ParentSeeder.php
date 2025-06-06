@@ -10,6 +10,6 @@ class ParentSeeder extends Seeder
 {
     public function run(): void
     {
-        ParentModel::factory(5)->create();
+        ParentModel::factory(10)->create();
     }
 }
