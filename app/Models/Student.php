@@ -16,16 +16,10 @@ class Student extends Model
         'grade_id',
         'class_id',
         'gender',
-        'username',
         'name',
-        'email',
         'phone',
-        'address',
         'bloodType',
-        'password'
     ];
-
-    protected $hidden = ['password'];
 
     public function user()
     {
