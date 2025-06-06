@@ -19,7 +19,12 @@ class StudentFactory extends Factory
             'parent_id' => ParentModel::factory(),
             'grade_id' => Grade::factory(),
             'class_id' => ClassModel::factory(),
-            'username' => $this->faker->unique()->userName()
+            'username' => $this->faker->unique()->userName,
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail(),
+            'phone' => $this->faker->unique()->numerify("08##-####-####"),
+            'address' => $this->faker->address,
+            'bloodType' => $this->faker->randomElement(['A', 'AB', 'B', 'O'])
         ];
     }
 }
