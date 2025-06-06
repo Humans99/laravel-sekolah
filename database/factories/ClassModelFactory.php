@@ -14,7 +14,7 @@ class ClassModelFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->unique()->word,
+            'name' => $this->faker->unique()->randomElement(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']),
             'capacity' => $this->faker->numberBetween(20, 40),
             'supervisor_id' => Teacher::factory()
         ];
