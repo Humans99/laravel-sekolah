@@ -13,7 +13,7 @@ class TeacherFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory()->create(['role' => 'teacher'])->id(),
+            'user_id' => User::factory()->create(['role' => 'teacher'])->id,
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->unique()->numerify("08##-####-####"),
