@@ -14,6 +14,12 @@ class TeacherFactory extends Factory
     {
         return [
             'user_id' => User::factory()->create(['role' => 'teacher'])->id(),
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'phone' => $this->faker->unique()->numerify("08##-####-####"),
+            'address' => $this->faker->address,
+            'bloodType' => $this->faker->randomElement(['A', "B", 'AB', 'O']),
+            'gender' => $this->faker->randomElement(['Pria', "Wanita"]),
         ];
     }
 }
