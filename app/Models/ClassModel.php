@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ClassModel extends Model
 {
+    use HasFactory;
+    protected static $factory;
     protected $table = 'classes';
     protected $fillable = ['name', 'capacity', 'supervisor_id'];
 
@@ -32,5 +35,5 @@ class ClassModel extends Model
     public function events()
     {
         return $this->hasMany(Event::class);
-    }   
+    }
 }
