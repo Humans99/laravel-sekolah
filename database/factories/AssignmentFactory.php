@@ -14,6 +14,7 @@ class AssignmentFactory extends Factory
         return [
             'lesson_id' => Lesson::factory(),
             'title' => $this->faker->sentence(),
+            'start' => $this->faker->dateTimeBetween('-1 week', 'now'),
             'due' => $this->faker->dateTimeBetween('now', '+1 month')
         ];
     }
