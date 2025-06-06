@@ -6,7 +6,7 @@ use App\Models\ParentModel;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ParentFactory extends Factory
+class ParentModelFactory extends Factory
 {
     protected $model = ParentModel::class;
     public function definition(): array
