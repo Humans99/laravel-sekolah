@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->enum('level', [7, 8, 9]);
+            $table->string('level');
             $table->timestamps();
         });
     }
