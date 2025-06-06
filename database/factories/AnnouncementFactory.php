@@ -15,7 +15,7 @@ class AnnouncementFactory extends Factory
             'class_id' => ClassModel::factory(),
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'date' => $this->faker->date('Y-m-d', 'now')
+            'date' => $this->faker->dateTime
         ];
     }
 }
