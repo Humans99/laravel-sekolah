@@ -17,13 +17,10 @@ return new class extends Migration
             $table->foreignId('parent_id')->constrained('parents')->onDelete('cascade');
             $table->foreignId('grade_id')->constrained()->onDelete('cascade');
             $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
-            $table->string('username')->unique();
             $table->string('name');
-            $table->string('password');
-            $table->string('email')->unique();
             $table->string('phone')->unique();
-            $table->string('address');
             $table->enum('bloodType', ['A', 'AB', 'B', 'O']);
+            $table->enum('gender', ['Pria', 'Wanita']);
             $table->timestamps();
         });
     }
