@@ -18,7 +18,7 @@ class StudentSeeder extends Seeder
         $classes = ClassModel::all();
 
         foreach ($parents as $parent) {
-            Student::factory()->create([
+            Student::factory(random_int(1, 4))->create([
                 'parent_id' => $parent->id,
                 'class_id' => $classes->random()->id,
                 'grade_id' => $grades->random()->id,
