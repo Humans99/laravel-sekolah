@@ -12,7 +12,7 @@ class SubjectSeeder extends Seeder
     {
         $subjects = ['Matematika', 'IPA', "IPS", "Bahasa Indonesia", 'Bahasa Inggris', 'Seni Budaya', 'PJOK', 'PKN', 'Pendidikan Agama'];
         foreach ($subjects as $subject) {
-            Subject::factory()->create(['name' => $subject]);
+            Subject::create(['name' => $subject]);
         }
     }
 }
