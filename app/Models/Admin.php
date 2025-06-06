@@ -12,12 +12,7 @@ class Admin extends Authenticatable
     use Notifiable;
     protected static $factory;
 
-    protected $fillable = ['user_id', 'username', 'password'];
-
-    protected $hidden = [
-        'password',
-        'remember_token'
-    ];
+    protected $fillable = ['user_id'];
 
     public function user()
     {
