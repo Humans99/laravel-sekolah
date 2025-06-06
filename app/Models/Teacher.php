@@ -11,6 +11,7 @@ class Teacher extends Model
     protected static $factory;
     protected $fillable = [
         'user_id',
+        'subject_id',
         'name',
         'phone',
         'address',
@@ -21,6 +22,11 @@ class Teacher extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
     }
 
     public function lessons()
