@@ -11,7 +11,7 @@ class EventFactory extends Factory
     protected $model = Event::class;
     public function definition(): array
     {
-        $start = $this->faker->dateTimeBetween('-1 week', '+1 week');
+        $start = $this->faker->dateTime('now');
         return [
             'class_id' => ClassModel::factory(),
             'title' => $this->faker->sentence(),
