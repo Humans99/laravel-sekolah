@@ -12,7 +12,7 @@ class AdminFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory()->create(['role' => 'admin'])->id(),
+            'user_id' => User::factory(),
             'username' => $this->faker->unique()->userName()
         ];
     }
