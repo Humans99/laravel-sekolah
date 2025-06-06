@@ -16,7 +16,7 @@ class Assignment extends Model
         return $this->belongsTo(Lesson::class);
     }
 
-    public function resuluts()
+    public function results()
     {
         return $this->hasMany(Result::class);
     }
