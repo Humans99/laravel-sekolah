@@ -12,7 +12,7 @@ class ParentFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory()->create(['role' => 'parent'])->id(),
+            'user_id' => User::factory()->create(['role' => 'parent'])->id,
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->unique()->numerify("08##-####-####"),
