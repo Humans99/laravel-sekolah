@@ -11,11 +11,12 @@ class AssignmentFactory extends Factory
     protected $model = Assignment::class;
     public function definition(): array
     {
+        $start = $this->faker->dateTime('now');
         return [
             'lesson_id' => Lesson::factory(),
             'title' => $this->faker->sentence(),
-            'start' => $this->faker->dateTimeBetween('-1 week', 'now'),
-            'due' => $this->faker->dateTimeBetween('now', '+1 month')
+            'start' => $this->faker->dateTimeBetween($start),
+            'due' => $this->faker->dateTimeBetween($start, '+1 week')
         ];
     }
 }
