@@ -15,7 +15,7 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory()->create(['role' => 'student'])->id(),
+            'user_id' => User::factory()->create(['role' => 'student'])->id,
             'parent_id' => ParentModel::factory(),
             'grade_id' => Grade::factory(),
             'class_id' => ClassModel::factory(),
