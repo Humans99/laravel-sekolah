@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -14,6 +15,7 @@ class TeacherFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
+            'subject_id' => Subject::inRandomOrder()->first()->id,
             'name' => $this->faker->name,
             'phone' => $this->faker->unique()->numerify("08##-####-####"),
             'address' => $this->faker->address,
