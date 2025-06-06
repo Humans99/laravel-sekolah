@@ -21,8 +21,11 @@ class Student extends Model
         'email',
         'phone',
         'address',
-        'bloodType'
+        'bloodType',
+        'password'
     ];
+
+    protected $hidden = ['password'];
 
     public function user()
     {
