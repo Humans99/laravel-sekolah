@@ -15,7 +15,7 @@ class AttendanceFactory extends Factory
         return [
             'student_id' => Student::factory(),
             'lesson_id' => Lesson::factory(),
-            'date' => $this->faker->date,
+            'date' => $this->faker->dateTime,
             'status' => $this->faker->randomElement(['Hadir', 'Sakit', 'Ijin', 'Alfa'])
         ];
     }
