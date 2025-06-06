@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('supervisor_id')->constrained('teachers')->onDelete('cascade');
             $table->string('name');
-            $table->enum('capacity', [20, 30, 40]);
+            $table->string('capacity');
             $table->timestamps();
         });
     }
