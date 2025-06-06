@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
             $table->string('username')->unique();
             $table->string('name');
+            $table->string('password');
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->string('address');
