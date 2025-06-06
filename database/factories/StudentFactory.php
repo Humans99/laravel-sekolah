@@ -23,7 +23,7 @@ class StudentFactory extends Factory
             'name' => $this->faker->name,
             'phone' => $this->faker->unique()->numerify("08##-####-####"),
             'bloodType' => $this->faker->randomElement(['A', 'AB', 'B', 'O']),
-            'bloodType' => $this->faker->randomElement(['Pria', 'Wanita'])
+            'gender' => $this->faker->randomElement(['Pria', 'Wanita'])
         ];
     }
 }
