@@ -13,7 +13,11 @@ class LessonFactory extends Factory
     protected $model = Lesson::class;
     public function definition(): array
     {
+        $start = $this->faker->dateTime;
         return [
+            'name' => $this->faker->unique()->sentence(3),
+            'start' => $start,
+            'end' => $this->faker->dateTimeBetween($start, '+2 hours'),
             'teacher_id' => Teacher::factory(),
             'subject_id' => Subject::factory(),
             'class_id' => ClassModel::factory(),
