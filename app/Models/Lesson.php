@@ -24,14 +24,14 @@ class Lesson extends Model
         return $this->belongsTo(Teacher::class);
     }
 
-    public function subject()
-    {
-        return $this->belongsTo(Subject::class);
-    }
-
     public function class()
     {
         return $this->belongsTo(ClassModel::class);
+    }
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
     }
 
     public function assignments()
