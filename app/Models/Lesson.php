@@ -10,10 +10,11 @@ class Lesson extends Model
     use HasFactory;
     protected static $factory;
     protected $fillable = [
-        'name',
         'start',
         'end',
+        'name',
         'subject_id',
+        'grade_id',
         'class_id',
         'teacher_id'
     ];
