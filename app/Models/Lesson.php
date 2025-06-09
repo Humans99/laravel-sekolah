@@ -48,4 +48,9 @@ class Lesson extends Model
     {
         return $this->hasMany(Attendance::class);
     }
+
+    public function subjects()
+    {
+        return $this->belongsTo(Subject::class);
+    }
 }
