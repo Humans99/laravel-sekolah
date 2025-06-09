@@ -11,7 +11,7 @@ class Exam extends Model
     protected static $factory;
     protected $fillable = ['title', 'start', 'end', 'lesson_id'];
 
-    public function result()
+    public function results()
     {
         return $this->hasMany(Result::class);
     }
