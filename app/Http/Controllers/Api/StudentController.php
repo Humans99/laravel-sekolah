@@ -14,6 +14,13 @@ class StudentController extends Controller
         $students = Student::with(['user', 'parent', 'grade', 'class'])
             ->paginate(request()->get('per_page', 10));
 
+        if ($students->isEmpty()) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'No students found'
+            ], 404);
+        }
+
         return new StudentResource(
             $students,
             200,
@@ -26,9 +33,15 @@ class StudentController extends Controller
         //
     }
 
-    public function show(string $id)
+    public function show(Student $student)
     {
-        //
+        $student->load(['user', 'parent', 'grade', 'class', 'attendances', 'results']);
+
+        return new StudentResource(
+            $student,
+            200,
+            'Student retrieved successfully'
+        );
     }
 
     public function update(Request $request, string $id)
