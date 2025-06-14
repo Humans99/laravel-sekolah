@@ -26,14 +26,14 @@ class RegisterRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
-    {
-        $errors = $validator->errors()->all();
-        $response = response()->json([
-            'message' => implode(' ', $errors),
-            'errors' => true
-        ], 422);
+    // protected function failedValidation(Validator $validator)
+    // {
+    //     $errors = $validator->errors()->all();
+    //     $response = response()->json([
+    //         'message' => implode(' ', $errors),
+    //         'errors' => true
+    //     ], 422);
 
-        throw new HttpResponseException($response);
-    }
+    //     throw new HttpResponseException($response);
+    // }
 }
