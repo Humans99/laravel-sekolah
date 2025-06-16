@@ -41,14 +41,15 @@ class StudentController extends Controller
             'gender' => 'required|in:Pria,Wanita',
             'phone' => 'required|unique:students,phone',
             'bloodType' => 'required|in:A,AB,B,O',
-
-            'user_id' => 'required|exists:users,id',
-            'parent_id' => 'required|exists:parents,id',
+            'parent_id' => 'nullable|exists:parents,id',
             'class_id' => 'required|exists:classes,id',
             'grade_id' => 'required|exists:grades,id',
+            'email' => 'required|email|unique:users,email',
 
             'parent_name' => 'required|string',
             'parent_email' => 'required|email|unique:users,email',
+            'parent_phone' => 'required|unique:parents,phone',
+            'parent_address' => 'required|string',
         ]);
 
         DB::beginTransaction();
