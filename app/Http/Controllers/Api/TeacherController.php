@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TeacherCollection;
 use App\Http\Resources\TeacherResource;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class TeacherController extends Controller
             ], 404);
         }
 
-        return new TeacherResource($teachers, 200, 'Teachers retrieved successfully');
+        return new TeacherCollection($teachers);
     }
 
     public function store(Request $request)
