@@ -17,7 +17,7 @@ class UserFactory extends Factory
             'username' => $username,
             'email' => $this->faker->unique()->safeEmail,
             'password' => Hash::make($username),
-            'role' => $this->faker->randomElement(['admin', 'teacher', 'student', 'parent'])
+            'role' => $this->faker->randomElement(['teacher', 'student', 'parent'])
         ];
     }
 }
