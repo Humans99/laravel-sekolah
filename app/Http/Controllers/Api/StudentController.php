@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StudentResource;
 use App\Models\Student;
+use App\Models\User;
+use DB;
+use Hash;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -28,15 +31,88 @@ class StudentController extends Controller
         );
     }
 
-    public function store(Request $request)
+    public function registerFull(Request $request)
     {
-        //
+        $request->validate([
+            'nis' => 'required|unique:students,nis',
+            'name' => 'required|string',
+            'gender' => 'required|in:Pria,Wanita',
+            'phone' => 'required|unique:students,phone',
+            'bloodType' => 'required|in:A,AB,B,O',
+
+            'user_id' => 'required|exists:users,id',
+            'parent_id' => 'required|exists:parents,id',
+            'class_id' => 'required|exists:classes,id',
+            'grade_id' => 'required|exists:grades,id',
+
+            'parent_name' => 'required|string',
+            'parent_email' => 'required|email|unique:users,email',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $nis = $request->nis;
+            $last4 = substr($nis, -4);
+
+            // Parent Account
+            $parentUser = User::create([
+                'username' => 'ORTU' . $last4,
+                'email' => $request->parent_email,
+                'password' => Hash::make('ORTU' . $last4),
+                'role' => 'parent',
+            ]);
+
+            $parent = $parentUser->parent()->create([
+                'name' => $request->parent_name,
+                'user_id' => $parentUser->id,
+            ]);
+
+            // Student Account
+            $studentUser = User::create([
+                'username' => $nis,
+                'email' => $request->user()->email,
+                'password' => Hash::make($nis),
+                'role' => 'student',
+            ]);
+
+            $student = $studentUser->student()->create([
+                'user_id' => $studentUser->id,
+                'parent_id' => $parent->id,
+                'grade_id' => $request->grade_id,
+                'class_id' => $request->class_id,
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'bloodType' => $request->bloodType,
+                'nis' => $request->nis,
+                'gender' => $request->gender
+            ]);
+
+            DB::commit();
+            return response()->json([
+                'status' => 201,
+                'message' => 'Student registered successfully',
+                'data' => new StudentResource($student)
+            ], 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Failed to register student',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
-    public function show(Student $student)
+    public function show($id)
     {
-        $student->load(['user', 'parent', 'grade', 'class', 'attendances', 'results']);
-
+        $student = Student::with(['user', 'parent', 'grade', 'class'])->find($id);
+        if (!$student) {
+            return response()->json([
+                'status' => 404,
+                'error' => true,
+                'message' => 'Student not found'
+            ], 404);
+        }
         return new StudentResource(
             $student,
             200,
