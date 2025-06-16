@@ -14,15 +14,19 @@ class StudentSeeder extends Seeder
     public function run(): void
     {
         $parents = ParentModel::all();
-        $grades = Grade::all();
-        $classes = ClassModel::all();
+        $grades = Grade::pluck('id');
+        $classes = ClassModel::pluck('id');
 
         foreach ($parents as $parent) {
-            Student::factory(random_int(1, 4))->create([
-                'parent_id' => $parent->id,
-                'class_id' => $classes->random()->id,
-                'grade_id' => $grades->random()->id,
-            ]);
+            // Buat 1 hingga 3 siswa untuk setiap ortu
+            $childOut = random_int(1, 3);
+            for ($i = 0; $i < $childOut; $i++) {
+                Student::factory()->create([
+                    'parent_id' => $parent->id,
+                    'class_id' => $classes->random(),
+                    'grade_id' => $grades->random(),
+                ]);
+            }
         }
     }
 }
