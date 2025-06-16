@@ -19,9 +19,10 @@ class AdminSeeder extends Seeder
                 'role' => 'admin',
             ]);
 
-        Admin::create([
-            'user_id' => $user->id,
-            'name' => 'Administrator',
-        ]);
+            Admin::create([
+                'user_id' => $user->id,
+                'name' => 'Administrator',
+            ]);
+        }
     }
 }
