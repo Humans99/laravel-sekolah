@@ -13,7 +13,7 @@ class TeacherSeeder extends Seeder
         $subjects = Subject::pluck('id')->toArray();
 
         // Buat 20 teacher dengan subject_id acak dari daftar subject yang ada
-        Teacher::factory()->count(31)->create([
+        Teacher::factory()->count(41)->create([
             'subject_id' => function () use ($subjects) {
                 return fake()->randomElement($subjects);
             }
