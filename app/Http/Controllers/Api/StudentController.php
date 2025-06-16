@@ -69,12 +69,14 @@ class StudentController extends Controller
             $parent = $parentUser->parent()->create([
                 'name' => $request->parent_name,
                 'user_id' => $parentUser->id,
+                'phone' => $request->parent_phone,
+                'address' => $request->parent_address ?? 'No address provided',
             ]);
 
             // Student Account
             $studentUser = User::create([
                 'username' => $nis,
-                'email' => $request->user()->email,
+                'email' => $request->email,
                 'password' => Hash::make($nis),
                 'role' => 'student',
             ]);
@@ -84,16 +86,15 @@ class StudentController extends Controller
                 'parent_id' => $parent->id,
                 'grade_id' => $request->grade_id,
                 'class_id' => $request->class_id,
+                'nis' => $request->nis,
                 'name' => $request->name,
+                'gender' => $request->gender,
                 'phone' => $request->phone,
                 'bloodType' => $request->bloodType,
-                'nis' => $request->nis,
-                'gender' => $request->gender
             ]);
 
             DB::commit();
             return response()->json([
-                'status' => 201,
                 'message' => 'Student registered successfully',
                 'data' => new StudentResource($student)
             ], 201);
