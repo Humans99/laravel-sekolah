@@ -9,6 +9,8 @@ use App\Models\User;
 use DB;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Response;
 
 class StudentController extends Controller
 {
