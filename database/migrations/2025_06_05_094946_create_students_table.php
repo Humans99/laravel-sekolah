@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
             $table->string('name');
             $table->string('phone')->unique();
+            $table->char('nis', 10)->unique();
             $table->enum('bloodType', ['A', 'AB', 'B', 'O']);
             $table->enum('gender', ['Pria', 'Wanita']);
             $table->timestamps();
