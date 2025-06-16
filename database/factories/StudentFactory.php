@@ -21,6 +21,7 @@ class StudentFactory extends Factory
             'grade_id' => Grade::factory(),
             'class_id' => ClassModel::factory(),
             'name' => $this->faker->name,
+            'nis' => $this->faker->unique()->numerify('##########'),
             'phone' => $this->faker->unique()->numerify("08##-####-####"),
             'bloodType' => $this->faker->randomElement(['A', 'AB', 'B', 'O']),
             'gender' => $this->faker->randomElement(['Pria', 'Wanita'])
