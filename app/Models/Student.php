@@ -19,6 +19,7 @@ class Student extends Model
         'name',
         'phone',
         'bloodType',
+        'nis'
     ];
 
     public function user()
