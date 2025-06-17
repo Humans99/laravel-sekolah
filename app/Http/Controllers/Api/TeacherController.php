@@ -10,18 +10,20 @@ use App\Models\User;
 use DB;
 use Illuminate\Http\Request;
 use Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class TeacherController extends Controller
 {
     public function index()
     {
-        $teachers = Teacher::with(['user', 'subject'])->paginate(request()->get('per_page', 10));
+        $perPage = request()->get('per_page', 12);
+        $teachers = Teacher::with(['user', 'subject'])->paginate($perPage);
 
         if ($teachers->isEmpty()) {
             return response()->json([
-                'status' => 404,
+                'status' => Response::HTTP_NOT_FOUND,
                 'message' => 'No teachers found'
-            ], 404);
+            ], Response::HTTP_NOT_FOUND);
         }
 
         return new TeacherCollection($teachers);
