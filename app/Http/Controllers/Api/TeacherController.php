@@ -31,7 +31,17 @@ class TeacherController extends Controller
 
     public function show(string $id)
     {
-        //
+        $teacher = Teacher::with(['subject', 'user'])->find($id);
+
+        if (!$teacher) {
+            return response()->json([
+                'status' => 404,
+                'error' => true,
+                'message' => 'Teacher not found',
+            ], 404);
+        }
+
+        return new TeacherResource($teacher);
     }
 
     public function update(Request $request, string $id)
