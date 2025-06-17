@@ -48,17 +48,16 @@ class TeacherController extends Controller
 
         try {
             $user = User::create([
-                'username' => $request['username'],
-                'email' => $request['email'],
-                'password' => bcrypt($request['password']),
+                'username' => $validated['username'],
+                'email' => $validated['email'],
+                'password' => bcrypt($validated['password']),
                 'role' => 'teacher'
             ]);
 
-            $code = $this->generateUniqueCode();
             $teacher = Teacher::create([
                 'user_id' => $user->id,
                 'subject_id' => $validated['subject_id'],
-                'code' => $code,
+                'code' => $this->generateUniqueCode(),
                 'name' => $validated['name'],
                 'address' => $validated['address'],
                 'phone' => $validated['phone'],
@@ -69,17 +68,108 @@ class TeacherController extends Controller
             DB::commit();
 
             return response()->json([
-                'status' => 201,
+                'status' => Response::HTTP_CREATED,
                 'message' => 'Teacher created successfully',
                 'data' => new TeacherResource($teacher->load(['user', 'subject'])),
-            ], 201);
+            ], Response::HTTP_CREATED);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message' => 'Failed to create teacher',
+                'error' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function showByCode(string $code)
+    {
+        $teacher = Teacher::with(['subject', 'user'])->where('code', $code)->first();
+
+        if (!$teacher) {
+            return response()->json([
+                'status' => Response::HTTP_NOT_FOUND,
+                'error' => true,
+                'message' => 'Teacher not found',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return new TeacherResource($teacher);
+    }
+
+    public function updateByCode(Request $request, string $code)
+    {
+        $teacher = Teacher::with('user')->where('code', $code)->first();
+
+        if (!$teacher) {
+            if (!$teacher) {
+                return response()->json([
+                    'status' => Response::HTTP_NOT_FOUND,
+                    'error' => true,
+                    'message' => 'Teacher not found with the specified code',
+                ], Response::HTTP_NOT_FOUND);
+            }
+        }
+
+        $validated = $request->validate([
+            // Teachers
+            'name' => 'sometimes|string|max:255',
+            'address' => 'sometimes|string|max:255',
+            'phone' => 'sometimes|string|max:20',
+            'bloodType' => 'sometimes|string|in:A,B,AB,O',
+            'gender' => 'sometimes|string|in:Pria,Wanita',
+            'subject_id' => 'sometimes|exists:subjects,id',
+            // Users
+            'password' => 'sometimes|string|min:8',
+        ]);
+
+        $teacher->update(array_filter($validated, fn($key) => $key !== 'password', ARRAY_FILTER_USE_KEY));
+
+        if (isset($validated['password'])) {
+            $teacher->user->update(['password' => bcrypt($validated['password'])]);
+        }
+
+        return response()->json([
+            'status' => Response::HTTP_OK,
+            'message' => 'Teacher updated successfully',
+            'data' => new TeacherResource($teacher->fresh(['user', 'subject'])),
+        ], Response::HTTP_OK);
+    }
+
+    public function destroyByCode(string $code)
+    {
+        $teacher = Teacher::where('code', $code)->first();
+
+        if (!$teacher) {
+            return response()->json([
+                'status' => Response::HTTP_NOT_FOUND,
+                'error' => true,
+                'message' => 'Teacher not found with the specified code'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            // Hapus akun guru
+            $teacher->user->delete();
+
+            // Hapus data guru
+            $teacher->delete();
+
+            DB::commit();
+            return response()->json([
+                'status' => Response::HTTP_OK,
+                'message' => "Teacher deleted successfully",
+            ], Response::HTTP_OK);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
-                'status' => 500,
-                'message' => 'Failed to create teacher',
-                'error' => $e->getMessage(),
-            ], 500);
+                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'error' => true,
+                'message' => 'Failed to delete teacher',
+                'details' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -89,30 +179,5 @@ class TeacherController extends Controller
             $code = strtoupper(Str::random(3));
         } while (Teacher::where('code', $code)->exists() || !preg_match('/^[A-Z]{3}$/', $code));
         return $code;
-    }
-
-    public function show(string $id)
-    {
-        $teacher = Teacher::with(['subject', 'user'])->find($id);
-
-        if (!$teacher) {
-            return response()->json([
-                'status' => 404,
-                'error' => true,
-                'message' => 'Teacher not found',
-            ], 404);
-        }
-
-        return new TeacherResource($teacher);
-    }
-
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    public function destroy(string $id)
-    {
-        //
     }
 }
