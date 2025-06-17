@@ -14,8 +14,12 @@ class TeacherFactory extends Factory
 
     public function definition(): array
     {
+        $user = User::factory()->create([
+            'role' => 'teacher',
+        ]);
+
         return [
-            'user_id' => User::factory(),
+            'user_id' => $user->id,
             'subject_id' => Subject::inRandomOrder()->first()->id,
             'code' => $this->generateUniqueCode(),
             'name' => $this->faker->name,
