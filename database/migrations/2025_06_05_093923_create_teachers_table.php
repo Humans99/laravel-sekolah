@@ -22,6 +22,7 @@ return new class extends Migration
             $table->enum('bloodType', ['A', 'AB', 'B', 'O']);
             $table->enum('gender', ['Pria', 'Wanita']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
