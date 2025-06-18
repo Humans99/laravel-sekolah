@@ -84,7 +84,7 @@ class StudentController extends Controller
                 'parent_id' => $parent->id,
                 'grade_id' => $request->grade_id,
                 'class_id' => $request->class_id,
-                'nis' => $request->nis,
+                'nis' => $nis,
                 'name' => $request->name,
                 'gender' => $request->gender,
                 'phone' => $request->phone,
