@@ -32,12 +32,10 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'username' => 'required|string|unique:users,username',
             'email' => ['required', 'regex:/^[^\s@]+@[^\s@]+\.[^\s@]+$/', 'unique:users,email'],
-            'password' => 'required|string|min:8',
-
             'subject_id' => 'required|exists:subjects,id',
             'name' => 'required|string|max:100',
+            'nip' => 'required|string|unique:teachers,nip|min:18|max:18',
             'address' => 'required|string',
             'phone' => 'required|string',
             'bloodType' => 'required|in:A,AB,B,O',
@@ -48,9 +46,9 @@ class TeacherController extends Controller
 
         try {
             $user = User::create([
-                'username' => $validated['username'],
+                'username' => $validated['nip'],
                 'email' => $validated['email'],
-                'password' => bcrypt($validated['password']),
+                'password' => bcrypt($validated['nip']),
                 'role' => 'teacher'
             ]);
 
@@ -59,6 +57,7 @@ class TeacherController extends Controller
                 'subject_id' => $validated['subject_id'],
                 'code' => $this->generateUniqueCode(),
                 'name' => $validated['name'],
+                'nip' => $validated['nip'],
                 'address' => $validated['address'],
                 'phone' => $validated['phone'],
                 'bloodType' => $validated['bloodType'],
