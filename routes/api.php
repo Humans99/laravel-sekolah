@@ -23,6 +23,7 @@ Route::middleware(['auth:sanctum', 'role:admin,teacher'])->group(function () {
   // Teacher (INDEX, SHOW, UPDATE)
   Route::get('/teachers', [TeacherController::class, 'index']);
   Route::get('/teachers/code/{code}', [TeacherController::class, 'showByCode'])->where('code', '[A-Z]{3}');
+  // Re-Check Update
   Route::put('/teachers/code/{code}', [TeacherController::class, 'updateByCode'])->where('code', '[A-Z]{3}');
 });
 
