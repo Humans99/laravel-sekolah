@@ -23,6 +23,7 @@ class TeacherFactory extends Factory
             'subject_id' => Subject::inRandomOrder()->first()->id,
             'code' => $this->generateUniqueCode(),
             'name' => $this->faker->name,
+            'nip' => $this->faker->unique()->numerify("############012025"),
             'phone' => $this->faker->unique()->numerify("08##########"),
             'address' => $this->faker->address,
             'bloodType' => $this->faker->randomElement(['A', "B", 'AB', 'O']),
