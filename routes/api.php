@@ -15,7 +15,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
   Route::delete('/teachers/code/{code}', [TeacherController::class, 'destroyByCode'])->where('code', '[A-Z]{3}');
 
   // Student
-  // Route::post('student-register', [StudentController::class, 'registerFull']);
+  Route::post('student-register', [StudentController::class, 'registerFull']);
   // Route::apiResource('students', StudentController::class);
 });
 
