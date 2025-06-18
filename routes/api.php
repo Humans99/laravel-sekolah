@@ -28,6 +28,7 @@ Route::middleware(['auth:sanctum', 'role:admin,teacher'])->group(function () {
 });
 
 Route::middleware(['auth:sanctum', 'role:admin, student'])->group(function () {
-  // Student
+  // Student (INDEX, SHOW)
   Route::get('/students', [StudentController::class, 'index']);
+  Route::get('/students/nis/{nis}', [StudentController::class, 'show']);
 });
