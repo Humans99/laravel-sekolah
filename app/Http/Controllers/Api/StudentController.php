@@ -122,10 +122,7 @@ class StudentController extends Controller
         return new StudentResource($student);
     }
 
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    public function updateByNis(Request $request, string $nis) {}
 
 
     public function destroyByNis(string $nis)
@@ -145,6 +142,9 @@ class StudentController extends Controller
         try {
             // Hapus akun siswa
             $student->user->delete();
+
+            // Hapus aku parent
+            $student->parent->user->delete();
 
             // Hapus data siswa
             $student->delete();
