@@ -16,7 +16,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
   // Student
   Route::post('student-register', [StudentController::class, 'registerFull']);
-  // Route::apiResource('students', StudentController::class);
+  Route::delete('/students/nis/{nis}', [StudentController::class, 'destroyByNis']);
 });
 
 Route::middleware(['auth:sanctum', 'role:admin,teacher'])->group(function () {
