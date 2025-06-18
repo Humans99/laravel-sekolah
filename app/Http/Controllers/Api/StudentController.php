@@ -35,7 +35,6 @@ class StudentController extends Controller
     public function registerFull(Request $request)
     {
         $request->validate([
-            'nis' => 'required|unique:students,nis',
             'name' => 'required|string',
             'gender' => 'required|in:Pria,Wanita',
             'phone' => 'required|unique:students,phone',
@@ -54,7 +53,7 @@ class StudentController extends Controller
         DB::beginTransaction();
 
         try {
-            $nis = $request->nis;
+            $nis = $this->generateUniqueNis();
             $last4 = substr($nis, -4);
 
             // Parent Account
