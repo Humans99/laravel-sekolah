@@ -15,6 +15,7 @@ class TeacherResource extends JsonResource
             'code' => $this->code,
             'phone' => $this->phone,
             'address' => $this->address,
+            'nip' => $this->nip,
             'user' => new UserResource($this->whenLoaded('user')),
             'subject' => new SubjectResource($this->whenLoaded('subject')),
         ];
