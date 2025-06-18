@@ -28,7 +28,8 @@ Route::middleware(['auth:sanctum', 'role:admin,teacher'])->group(function () {
 });
 
 Route::middleware(['auth:sanctum', 'role:admin, student'])->group(function () {
-  // Student (INDEX, SHOW)
+  // Student (INDEX, SHOW, UPDATE)
   Route::get('/students', [StudentController::class, 'index']);
   Route::get('/students/nis/{nis}', [StudentController::class, 'show']);
+  Route::put('/students/nis/{nis}', [StudentController::class, 'updateByNis']);
 });
