@@ -7,24 +7,16 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class StudentResource extends JsonResource
 {
-    public $status;
-    public $message;
-    public $data;
-
-    public function __construct($resource, $status = 200, $message = 'Success')
-    {
-        parent::__construct($resource);
-        $this->status = $status;
-        $this->message = $message;
-        $this->data = $resource;
-    }
-
     public function toArray(Request $request): array
     {
         return [
-            'status' => $this->status,
-            'message' => $this->message,
-            'data' => parent::toArray($request),
+            'id' => $this->id,
+            'name' => $this->name,
+            'phone' => $this->phone,
+            'nis' => $this->nis,
+            'bloodType' => $this->bloodType,
+            'gender' => $this->gender,
+            'user' => new UserResource($this->whenLoaded('user'))
         ];
     }
 }
