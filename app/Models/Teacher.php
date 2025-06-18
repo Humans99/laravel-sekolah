@@ -19,7 +19,8 @@ class Teacher extends Model
         'address',
         'bloodType',
         'gender',
-        'code'
+        'code',
+        'nip'
     ];
 
     public function user()
