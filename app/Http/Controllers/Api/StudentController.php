@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StudentCollection;
 use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use App\Models\User;
@@ -28,11 +29,7 @@ class StudentController extends Controller
             ], Response::HTTP_NOT_FOUND);
         }
 
-        return new StudentResource(
-            $students,
-            200,
-            'Students retrieved successfully'
-        );
+        return new StudentCollection($students);
     }
 
     public function registerFull(Request $request)
