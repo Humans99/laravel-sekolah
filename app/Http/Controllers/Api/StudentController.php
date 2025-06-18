@@ -129,8 +129,40 @@ class StudentController extends Controller
     }
 
 
-    public function destroy(string $id)
+    public function destroyByNis(string $nis)
     {
-        //
+        $student = Student::where('nis', $nis)->first();
+
+        if (!$student) {
+            return response()->json([
+                'status' => Response::HTTP_NOT_FOUND,
+                'error' => true,
+                'message' => "Student not found with the specified nis"
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            // Hapus akun siswa
+            $student->user->delete();
+
+            // Hapus data siswa
+            $student->delete();
+
+            DB::commit();
+            return response()->json([
+                'status' => Response::HTTP_OK,
+                'message' => "Student deleted successfully",
+            ], Response::HTTP_OK);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'error' => true,
+                'message' => 'Failed to delete student',
+                'details' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
