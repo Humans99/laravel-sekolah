@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,9 @@ Route::middleware(['auth:sanctum', 'role:admin,teacher'])->group(function () {
   Route::get('/teachers', [TeacherController::class, 'index']);
   Route::get('/teachers/code/{code}', [TeacherController::class, 'showByCode'])->where('code', '[A-Z]{3}');
   Route::put('/teachers/code/{code}', [TeacherController::class, 'updateByCode'])->where('code', '[A-Z]{3}');
+});
+
+Route::middleware(['auth:sanctum', 'role:admin, student'])->group(function () {
+  // Student
+  Route::get('/students', [StudentController::class, 'index']);
 });
