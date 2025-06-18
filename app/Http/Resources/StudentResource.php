@@ -19,6 +19,7 @@ class StudentResource extends JsonResource
             'user' => new UserResource($this->whenLoaded('user')),
             'parent' => new ParentResource($this->whenLoaded('parent')),
             'grade' => new GradeResource($this->whenLoaded('grade')),
+            'class' => new ClassResource($this->whenLoaded('class'))
         ];
     }
 }
