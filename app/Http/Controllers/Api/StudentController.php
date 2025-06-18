@@ -93,16 +93,19 @@ class StudentController extends Controller
             ]);
 
             DB::commit();
+
             return response()->json([
+                'status' => Response::HTTP_CREATED,
                 'message' => 'Student registered successfully',
-                'data' => new StudentResource($student)
-            ], 201);
-        } catch (\Exception $e) {
+                'data' => new StudentResource($student->load('user', 'parent', 'grade', 'class'))
+            ], Response::HTTP_CREATED);
+        } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json([
-                'message' => 'Failed to register student',
+                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message' => 'Failed to create student',
                 'error' => $e->getMessage(),
-            ], 500);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
