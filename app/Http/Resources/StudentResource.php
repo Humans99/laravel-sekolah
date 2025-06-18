@@ -16,7 +16,8 @@ class StudentResource extends JsonResource
             'nis' => $this->nis,
             'bloodType' => $this->bloodType,
             'gender' => $this->gender,
-            'user' => new UserResource($this->whenLoaded('user'))
+            'user' => new UserResource($this->whenLoaded('user')),
+            'parent' => new ParentResource($this->whenLoaded('parent'))
         ];
     }
 }
