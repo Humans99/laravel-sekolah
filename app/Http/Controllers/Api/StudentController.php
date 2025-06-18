@@ -109,21 +109,18 @@ class StudentController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(string $nis)
     {
-        $student = Student::with(['user', 'parent', 'grade', 'class'])->find($id);
+        $student = Student::with(['user', 'parent', 'grade', 'class'])->where('nis', $nis)->first();
+
         if (!$student) {
             return response()->json([
-                'status' => 404,
+                'status' => Response::HTTP_NOT_FOUND,
                 'error' => true,
                 'message' => 'Student not found'
-            ], 404);
+            ], Response::HTTP_NOT_FOUND);
         }
-        return new StudentResource(
-            $student,
-            200,
-            'Student retrieved successfully'
-        );
+        return new StudentResource($student);
     }
 
     public function update(Request $request, string $id)
