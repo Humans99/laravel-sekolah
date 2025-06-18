@@ -10,20 +10,22 @@ use DB;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class StudentController extends Controller
 {
     public function index()
     {
+        $perPage = request()->get('per_page', 12);
+
         $students = Student::with(['user', 'parent', 'grade', 'class'])
-            ->paginate(request()->get('per_page', 10));
+            ->paginate($perPage);
 
         if ($students->isEmpty()) {
             return response()->json([
-                'status' => 404,
+                'status' => Response::HTTP_NOT_FOUND,
                 'message' => 'No students found'
-            ], 404);
+            ], Response::HTTP_NOT_FOUND);
         }
 
         return new StudentResource(
