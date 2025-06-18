@@ -164,4 +164,13 @@ class StudentController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    private function generateUniqueNis(): string
+    {
+        do {
+            $nis = str_pad(random_int(0, 9999999999), 10, '0', STR_PAD_LEFT);
+        } while (Student::where('nis', $nis)->exists());
+
+        return $nis;
+    }
 }
